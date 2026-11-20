@@ -1,0 +1,6 @@
+plugins {
+    // automatically downloads the JDK requested by the toolchain in build.gradle (Java 25)
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+rootProject.name = 'compilerbau'
