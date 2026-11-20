@@ -1,5 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import de.compilerbau.main.Main;
 import org.junit.jupiter.api.Test;
 
 class MainTest {
