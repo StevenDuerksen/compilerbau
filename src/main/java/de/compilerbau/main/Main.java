@@ -7,8 +7,12 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Scanner;
 
+import de.compilerbau.main.parser.CExpr;
+import de.compilerbau.main.parser.CParser;
+import de.compilerbau.main.token.CToken;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -22,7 +26,12 @@ public class Main {
         if(input.equals("exit")) System.exit(0);
 
         CLexer lexer = new CLexer(CharStreams.fromString(input));
-        lexer.scan().forEach(IO::println);
+        List<CToken> tokens = lexer.scan();
+
+        CParser parser = new CParser();
+        CExpr ast = parser.parse(tokens);
+
+        IO.println(ast);
     }
 
     //CommonTokenStream tokens = new CommonTokenStream(lexer);
