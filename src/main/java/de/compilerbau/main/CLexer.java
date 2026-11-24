@@ -38,16 +38,9 @@ public class CLexer {
             return new CToken(CTokenKind.INT, readWhile(Character::isDigit));
         }
 
-        // 5 + +5 5++5
-
         String s = Character.toString(stream.LA(1));
         for (CTokenKind kind : CTokenKind.values()) {
             if (s.equals(kind.symbol)) {
-                if(stream.LA(1) == stream.LA(2)){
-                    stream.consume();
-                    stream.consume();
-                    return new CToken(kind, s.repeat(2));
-                }
                 stream.consume();
                 return new CToken(kind, s);
             }
