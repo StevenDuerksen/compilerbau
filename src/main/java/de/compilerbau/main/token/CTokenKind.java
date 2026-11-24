@@ -6,6 +6,8 @@ public enum CTokenKind {
     LPAREN("("),
     RPAREN(")"),
     SEMI(";"),
+    STAR("*"),
+    SLASH("/"),
     INT,
     EOF;
 

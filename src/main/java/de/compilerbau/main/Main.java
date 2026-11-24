@@ -19,7 +19,6 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 public class Main {
   static void main(String... args) throws IOException, URISyntaxException {
-    IO.println("Hello World!");
 
     while (true) {
         String input = IO.readln("expr?> ");
@@ -32,6 +31,11 @@ public class Main {
         CExpr ast = parser.parse(tokens);
 
         IO.println(ast);
+
+        CInterpreterExpr.InterpreterCintExpr interpreter = new CInterpreterExpr().new InterpreterCintExpr();
+        CInterpreterExpr.Value result = interpreter.eval(ast);
+
+        IO.println(CInterpreterExpr.Value.asInt(result));
     }
 
     //CommonTokenStream tokens = new CommonTokenStream(lexer);

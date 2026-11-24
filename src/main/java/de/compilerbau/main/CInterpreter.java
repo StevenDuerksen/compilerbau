@@ -13,7 +13,7 @@ public class CInterpreter {
     public record IntVal(int v) implements Value {}
 
 
-    public class InterpreterLint {
+    public class InterpreterCint {
         public Value eval(CExpr expr) {
             return switch (expr) {
                 case CExpr.CIntLiteral(var v) -> new IntVal(v);

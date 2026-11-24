@@ -12,4 +12,8 @@ public sealed interface CExpr {
     record CIntLiteral(int value) implements CExpr {}
     record AddCExpr(CExpr left, CExpr right) implements CExpr {}
     record SubCExpr(CExpr left, CExpr right) implements CExpr {}
+    record MulCExpr(CExpr left, CExpr right) implements CExpr {}
+    record DivCExpr(CExpr left, CExpr right) implements CExpr {}
+    record NegCExpr(CExpr expr) implements CExpr {}
+    record PosCExpr(CExpr expr) implements CExpr {}
 }

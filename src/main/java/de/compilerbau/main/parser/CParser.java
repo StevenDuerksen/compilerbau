@@ -14,6 +14,13 @@ import java.util.List;
  OP   := '+' | '-'
  INT  := [0-9]+
 
+ ----
+ Erweiterung für Multiplikation, Division und unäres Minus:
+
+ expr  := term (('+' | '-') term)*
+ term  := atom (('*' | '/') atom)*
+ atom  := '-' atom | INT | '(' expr ')' | '+' atom
+
  */
 
 public class CParser {
@@ -33,7 +40,25 @@ public class CParser {
     }
 
     private CExpr term(){
+        CExpr left = atom();
 
+        while (check(CTokenKind.STAR, CTokenKind.SLASH)) {
+            CToken operator = advance();
+            CExpr right = atom();
+
+            if(operator.kind() == CTokenKind.STAR){
+                left = new CExpr.MulCExpr(left, right);
+            }
+
+            if(operator.kind() == CTokenKind.SLASH){
+                left = new CExpr.DivCExpr(left, right);
+            }
+        }
+
+        return left;
+    }
+
+    private CExpr atom(){
         return switch (peek().kind()){
             case LPAREN -> {
                 match(CTokenKind.LPAREN);
@@ -47,9 +72,20 @@ public class CParser {
                 yield new CExpr.CIntLiteral(Integer.parseInt(number.lexeme()));
             }
 
+            case MINUS -> {
+                match(CTokenKind.MINUS);
+                CExpr atom = atom();
+                yield new CExpr.NegCExpr(atom);
+            }
+
+            case PLUS -> {
+                match(CTokenKind.PLUS);
+                CExpr atom = atom();
+                yield new CExpr.PosCExpr(atom);
+            }
+
             default -> throw new RuntimeException("unexpected token: " + peek());
         };
-
     }
 
     private CExpr expr(){
